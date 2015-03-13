@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, total={7in, 11in}]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings} 
+
+
+\setlength{\parskip}{0.7em}
+\title{\textbf{Predict River Length} \vspace{-2ex}}
+\author{Team : Technopreneurs}
+\date{\vspace{-5ex}}
+\begin{document}
+\maketitle
+
+\begin{flushleft}
+\textbf{Task:} Estimate rivers by length \par
+\textbf{Description:} Given a set of rivers, estimate their length \par
+\textbf{Detailed Description shown to participants:} "We will now ask you a series of questions. For each question, we will show you a River Name, and ask you to estimate its length. You will have to fill your estimate in the box provided. Please note that the length should be given in kilometre (km)" \par
+\textbf{Input Type:} Text \par
+\textbf{Corpus: }\\
+Wikipedia's "List of rivers by length"\\
+\url{http://en.wikipedia.org/wiki/List_of_rivers_by_length} \par
+
+\textbf{Representative tasks methodology:} \\
+Sample 20 rivers from this list using "Simple Random Sampling". \par
+
+\textbf{Justification:} Since the size of the dataset/corpus is very small (176 rivers), Simple Random Sampling is sufficient to generate a set of representative tasks. \par
+\textbf{Answer type:} Point estimation.	\par
+
+\textbf{Code:} (To generate the set of representative tasks)
+\lstset{language=R}
+\begin{lstlisting}[frame=single]  
+#Language: R
+
+#Read data from csv file
+mydata = read.csv("river_list.csv")
+
+#Generate a random sample of size 20 from the data
+mysample <- mydata[sample(1:nrow(mydata), 20, replace=FALSE),] 
+\end{lstlisting}
+
+\end{flushleft}
+
+\end{document}

@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, total={7in, 11in}]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{listings} 
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\setlength{\parskip}{0.7em}
+\title{\textbf{Predict Number of Goals} \vspace{-2ex}}
+\author{Team : Technopreneurs}
+\date{\vspace{-5ex}}
+\begin{document}
+\maketitle
+
+\begin{flushleft}
+\textbf{Task:} Goals Prediction in a Match \par
+
+\textbf{Description:} Given the league name, league ranking of teams before the match, predict the number of goals that will be scored during the match  
+\footnote{Task description was changed after the following comment by Dr. Sharad Goel on Piazza: "I think it would be interesting to ask about *future* games, rather than games that have already happened. For example, you could ask about MLS games that are schedule to happen in April."}\par
+
+\textbf{Detailed Description shown to participants:} "We will now ask you a series of questions. For each question, we will show the details of a soccer match from MLS Regular Season, and ask you to predict the number of goals that will be scored in that match. You will have to fill your prediction in the box provided. Please note that you can find the current league standings here: \url{http://www.mlssoccer.com/standings/2015}" \par
+
+\textbf{Input Type:} Text (Tabular Form) \par
+
+\textbf{Corpus: }\\
+MLS Schedule for April 2015 
+\footnote{Official Schedule: \url{http://goo.gl/kVjV8x} | Complete csv: \url{http://goo.gl/xykM7x}} 
+(csv format)\\
+\url{http://goo.gl/u9qQyI} \par
+
+\textbf{Representative tasks methodology:} \\
+Sample 20 matches from this list using "Weighted Sampling without replacement". The weights assigned to matches that are closer to the survey date will be higher so that prediction task becomes easier. \par
+
+\textbf{Justification:} Weighted Sampling where weights are more for matches nearer to current date is used to generate a set of representative tasks. This approach will also eliminate the chances of random guessing for later matches. The weighted sampling is based on \url{http://epubs.siam.org/doi/abs/10.1137/0209009} \par
+
+\textbf{Answer type:} Point estimation.	\par
+
+Note: Please find code on next page.
+\clearpage
+\textbf{Code:} (To generate the set of representative tasks)
+\lstset{language=R}
+\begin{lstlisting}[frame=single]  
+#Language: R
+
+weighted_Random_Sample <- function(
+  .data,
+  .weights,
+  .n
+){
+  #This section of code is slightly incorrect, 
+  #Our team is currently working on it.
+  key <- runif(length(.data)) ^ (1 / as.double(.weights))
+  return (.data) 
+  # Currently returns all rows, 
+  # This line will be changed in the final version
+}
+
+#Read data from csv file
+mydata = read.csv("MLS_Schedule_April_2015.csv")
+myData = read.csv("MLS_Schedule_April_2015.csv")
+
+mysample <- mydata[sample(1:nrow(mydata), 20, replace=FALSE),] 
+
+#Manipulation with date field
+mydata$Composite <- strptime(mydata$Composite,"%Y-%m-%d %H:%M")
+dateFields <- as.Date(mydata$Composite, "%Y-%m-%d %H:%M")
+N <- length(dateFields)
+diff <- dateFields[1:N] - Sys.Date()
+weights <- as.list(diff)
+weight <- t(weights)
+
+#Final call
+weighted_Random_Sample(myData,weight,20)
+
+\end{lstlisting}
+
+\end{flushleft}
+
+\end{document}
