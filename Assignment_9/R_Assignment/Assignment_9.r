@@ -19,7 +19,7 @@ if (file.exists(myFile))
   invisible(file.remove(myFile))
 
 #Write the data to file, use invisible to suppress output of lapply on console
-invisible(lapply(headCount, write, "headCount.txt", append=TRUE))
+invisible(lapply(headCount, write, myFile, append=TRUE))
 
 #Read data from file
 headCountNew <- read.table(myFile, header=FALSE)
